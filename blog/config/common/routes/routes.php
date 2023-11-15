@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Auth\Controller\AuthController;
 use App\Auth\Controller\SignupController;
-use App\Auth\Controller\ResetController;
+use App\Auth\Controller\ChangeController;
 use App\Blog\Archive\ArchiveController;
 use App\Blog\BlogController;
 use App\Blog\CommentController;
@@ -62,13 +62,13 @@ return [
         ) => new LimitRequestsMiddleware(new Counter($storage, 10, 10), $responseFactory))
         ->action([SignupController::class, 'signup'])
         ->name('auth/signup'),
-    Route::methods([Method::GET, Method::POST], '/reset')
+    Route::methods([Method::GET, Method::POST], '/change')
         ->middleware(fn(
             ResponseFactoryInterface $responseFactory,
             StorageInterface $storage
         ) => new LimitRequestsMiddleware(new Counter($storage, 10, 10), $responseFactory))
-        ->action([ResetController::class, 'reset'])
-        ->name('auth/reset'),
+        ->action([ChangeController::class, 'change'])
+        ->name('auth/change'),
 
     Group::create('/user')
         ->routes(

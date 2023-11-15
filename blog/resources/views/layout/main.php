@@ -139,7 +139,7 @@ $this->beginPage();
                     ],
                     [
                         'label' => $translator->translate('menu.password.change'),
-                        'url' => $urlGenerator->generate('auth/reset'),
+                        'url' => $urlGenerator->generate('auth/change'),
                         'visible' => !$isGuest,
                     ],
                     $isGuest ? '' : Form::tag()
