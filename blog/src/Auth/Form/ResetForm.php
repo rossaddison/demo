@@ -156,7 +156,7 @@ final class ResetForm extends FormModel implements RulesProviderInterface
         ];
     }
     
-    private function NewPasswordVerifyRules(): array
+    private function newPasswordVerifyRules(): array
     {
         return [
             new Required(),
