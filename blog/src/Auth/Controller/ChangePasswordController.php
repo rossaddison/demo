@@ -7,11 +7,11 @@ namespace App\Auth\Controller;
 use App\Auth\AuthService;
 use App\Auth\Identity;
 use App\Auth\IdentityRepository;
-use App\Auth\Form\ChangeForm;
+use App\Auth\Form\ChangePasswordForm;
 use App\Service\WebControllerService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Yiisoft\Form\FormHydrator;
+use Yiisoft\FormModel\FormHydrator;
 use Yiisoft\Http\Method;
 use Yiisoft\Translator\TranslatorInterface as Translator;
 use Yiisoft\User\CurrentUser;
@@ -37,7 +37,7 @@ final class ChangePasswordController
       IdentityRepository $identityRepository,
       ServerRequestInterface $request,
       FormHydrator $formHydrator,
-      ChangeForm $changeForm
+      ChangePasswordForm $changePasswordForm
     ): ResponseInterface {
       // permit an authenticated user with permission editPost (i.e. not a guest) only and null !== current user
       if (!$authService->isGuest()) {
@@ -51,8 +51,8 @@ final class ChangePasswordController
               // Identity and User are in a HasOne relationship so no null value
               $login = $identity->getUser()?->getLogin();
               if ($request->getMethod() === Method::POST
-                && $formHydrator->populate($changeForm, $request->getParsedBody())
-                && $changeForm->change() 
+                && $formHydrator->populate($changePasswordForm, $request->getParsedBody())
+                && $changePasswordForm->change() 
               ) {
                 // Identity implements CookieLoginIdentityInterface: ensure the regeneration of the cookie auth key by means of $authService->logout();
                 // @see vendor\yiisoft\user\src\Login\Cookie\CookieLoginIdentityInterface 
@@ -63,7 +63,7 @@ final class ChangePasswordController
                 $authService->logout();
                 return $this->redirectToMain();
               }
-              return $this->viewRenderer->render('change', ['formModel' => $changeForm, 'login' => $login]);
+              return $this->viewRenderer->render('change', ['formModel' => $changePasswordForm, 'login' => $login]);
             } // identity
           } // identity_id 
         } // current user
