@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Auth\Controller\AuthController;
 use App\Auth\Controller\SignupController;
-use App\Auth\Controller\ChangeController;
+use App\Auth\Controller\ChangePasswordController;
 use App\Blog\Archive\ArchiveController;
 use App\Blog\BlogController;
 use App\Blog\CommentController;
