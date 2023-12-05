@@ -67,7 +67,7 @@ return [
             ResponseFactoryInterface $responseFactory,
             StorageInterface $storage
         ) => new LimitRequestsMiddleware(new Counter($storage, 10, 10), $responseFactory))
-        ->action([ChangeController::class, 'change'])
+        ->action([ChangePasswordController::class, 'change'])
         ->name('auth/change'),
 
     Group::create('/user')

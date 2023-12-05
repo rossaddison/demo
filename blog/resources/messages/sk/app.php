@@ -19,7 +19,6 @@ return [
     'layout.archive' => 'Archív',
     'layout.blog' => 'Blog',
     'layout.change-language' => 'Zmeniť jazyk',
-    'layout.change-password' => 'Zmeniť heslo',
     'layout.console' => 'Konzola',
     'layout.content' => 'Obsah',
     'layout.create.new-user' => 'Vytvoriť nového užívateľa',

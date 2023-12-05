@@ -6,7 +6,7 @@ namespace App\Auth\Form;
 
 use App\User\UserRepository;
 use App\Auth\AuthService;
-use Yiisoft\Form\FormModel;
+use Yiisoft\FormModel\FormModel;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\Rule\Callback;
@@ -15,7 +15,7 @@ use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Validator\RulesProviderInterface;
 
-final class ChangeForm extends FormModel implements RulesProviderInterface
+final class ChangePasswordForm extends FormModel implements RulesProviderInterface
 {
     private string $login = '';
     private string $password = '';
@@ -69,7 +69,7 @@ final class ChangeForm extends FormModel implements RulesProviderInterface
      */
     public function getFormName(): string
     {
-        return 'Change';
+        return 'ChangePassword';
     }
     
     public function getLogin(): string

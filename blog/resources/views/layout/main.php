@@ -125,6 +125,10 @@ $this->beginPage();
                                 'label' => 'Indonesia',
                                 'url' => $urlGenerator->generateFromCurrent(['_language' => 'id'], fallbackRouteName: 'site/index'),
                             ],
+                            [
+                                'label' => 'German',
+                                'url' => $urlGenerator->generateFromCurrent(['_language' => 'de'], fallbackRouteName: 'site/index'),
+                            ],
                         ],
                     ],
                     [
@@ -136,11 +140,6 @@ $this->beginPage();
                         'label' => $translator->translate('menu.signup'),
                         'url' => $urlGenerator->generate('auth/signup'),
                         'visible' => $isGuest,
-                    ],
-                    [
-                        'label' => $translator->translate('menu.password.change'),
-                        'url' => $urlGenerator->generate('auth/change'),
-                        'visible' => !$isGuest,
                     ],
                     $isGuest ? '' : Form::tag()
                             ->post($urlGenerator->generate('auth/logout'))

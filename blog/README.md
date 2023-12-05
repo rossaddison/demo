@@ -67,11 +67,6 @@ The code is statically analyzed with [Psalm](https://psalm.dev/). To run static 
 ./vendor/bin/psalm
 ```
 
-### Installing Bootstrap Node Modules with WAMP 
-
-1. Make a directory node_modules in the blog directory.
-2. After including npm in the environment variable settings in windows, use the command npm i.
-
 ### Support the project
 
 [![Open Collective](https://img.shields.io/badge/Open%20Collective-sponsor-7eadf1?logo=open%20collective&logoColor=7eadf1&labelColor=555555)](https://opencollective.com/yiisoft)

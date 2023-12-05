@@ -21,7 +21,6 @@ return [
     'layout.archive' => 'Arsip',
     'layout.blog' => 'Blog',
     'layout.change-language' => 'Ubah bahasa',
-    'layout.change-password' => 'Ganti kata sandi',
     'layout.console' => 'Konsol',
     'layout.content' => 'Isi',
     'layout.create.new-user' => 'Buat pengguna baru',

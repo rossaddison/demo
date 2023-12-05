@@ -17,18 +17,18 @@ use Yiisoft\Translator\TranslatorInterface as Translator;
 use Yiisoft\User\CurrentUser;
 use Yiisoft\Yii\View\ViewRenderer;
 
-final class ChangeController
+final class ChangePasswordController
 {
     public function __construct(
       private Translator $translator,
-      private CurrentUser $current_user,
+      private CurrentUser $currentUser,
       private WebControllerService $webService, 
       private ViewRenderer $viewRenderer,
     )
     {
-      $this->current_user = $current_user;
+      $this->currentUser = $currentUser;
       $this->translator = $translator;
-      $this->viewRenderer = $viewRenderer->withControllerName('change');
+      $this->viewRenderer = $viewRenderer->withControllerName('changepassword');
     }
     
     public function change(
@@ -42,9 +42,9 @@ final class ChangeController
       // permit an authenticated user with permission editPost (i.e. not a guest) only and null !== current user
       if (!$authService->isGuest()) {
         // see demo/blog/resources/rbac  
-        if ($this->current_user->can('editPost',[])) {
+        if ($this->currentUser->can('editPost',[])) {
           // readonly the login detail on the change form
-          $identity_id = $this->current_user->getIdentity()->getId();
+          $identity_id = $this->currentUser->getIdentity()->getId();
           if (null!==$identity_id) {
             $identity = $identityRepository->findIdentity($identity_id);
             if (null!==$identity) {
