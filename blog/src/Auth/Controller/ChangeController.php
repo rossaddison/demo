@@ -39,7 +39,7 @@ final class ChangeController
       FormHydrator $formHydrator,
       ChangeForm $changeForm
     ): ResponseInterface {
-      // permit an authenticated user with permission editPost (ie. not a guest) only and null!== current user
+      // permit an authenticated user with permission editPost (i.e. not a guest) only and null !== current user
       if (!$authService->isGuest()) {
         // see demo/blog/resources/rbac  
         if ($this->current_user->can('editPost',[])) {
