@@ -22,15 +22,13 @@ final class ChangePasswordController
     public function __construct(
       private Translator $translator,
       private CurrentUser $currentUser,
-      private WebControllerService $webService, 
+      private WebControllerService $webService,
       private ViewRenderer $viewRenderer,
     )
     {
-      $this->currentUser = $currentUser;
-      $this->translator = $translator;
       $this->viewRenderer = $viewRenderer->withControllerName('changepassword');
     }
-    
+
     public function change(
       AuthService $authService,
       Identity $identity,
@@ -41,7 +39,7 @@ final class ChangePasswordController
     ): ResponseInterface {
       // permit an authenticated user with permission editPost (i.e. not a guest) only and null !== current user
       if (!$authService->isGuest()) {
-        // see demo/blog/resources/rbac  
+        // see demo/blog/resources/rbac
         if ($this->currentUser->can('editPost',[])) {
           // readonly the login detail on the change form
           $identity_id = $this->currentUser->getIdentity()->getId();
@@ -52,10 +50,10 @@ final class ChangePasswordController
               $login = $identity->getUser()?->getLogin();
               if ($request->getMethod() === Method::POST
                 && $formHydrator->populate($changePasswordForm, $request->getParsedBody())
-                && $changePasswordForm->change() 
+                && $changePasswordForm->change()
               ) {
                 // Identity implements CookieLoginIdentityInterface: ensure the regeneration of the cookie auth key by means of $authService->logout();
-                // @see vendor\yiisoft\user\src\Login\Cookie\CookieLoginIdentityInterface 
+                // @see vendor\yiisoft\user\src\Login\Cookie\CookieLoginIdentityInterface
 
                 // Specific note: "Make sure to invalidate earlier issued keys when you implement force user logout,
                 // PASSWORD CHANGE and other scenarios, that require forceful access revocation for old sessions.
@@ -65,12 +63,12 @@ final class ChangePasswordController
               }
               return $this->viewRenderer->render('change', ['formModel' => $changePasswordForm, 'login' => $login]);
             } // identity
-          } // identity_id 
+          } // identity_id
         } // current user
-      } // auth service  
+      } // auth service
       return $this->redirectToMain();
     } // reset
-        
+
     private function redirectToMain(): ResponseInterface
     {
       return $this->webService->getRedirectResponse('site/index');

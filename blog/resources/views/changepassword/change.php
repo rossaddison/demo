@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Auth\Form\ChangeForm;
-use Yiisoft\Form\Field;
+use App\Auth\Form\ChangePasswordForm;
+use Yiisoft\FormModel\Field;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\Form;
 use Yiisoft\Router\UrlGeneratorInterface;
@@ -15,7 +15,7 @@ use Yiisoft\View\WebView;
  * @var TranslatorInterface   $translator
  * @var UrlGeneratorInterface $urlGenerator
  * @var string                $csrf
- * @var ChangeForm             $formModel
+ * @var ChangePasswordForm    $formModel
  */
 $this->setTitle($translator->translate('layout.change-password'));
 ?>
