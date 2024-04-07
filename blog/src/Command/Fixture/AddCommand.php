@@ -23,7 +23,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
 use Yiisoft\Yii\Console\ExitCode;
 use Yiisoft\Yii\Cycle\Command\CycleDependencyProxy;
-use Yiisoft\Yii\Cycle\Data\Writer\EntityWriter;
+use Yiisoft\Data\Cycle\Writer\EntityWriter;
 
 final class AddCommand extends Command
 {

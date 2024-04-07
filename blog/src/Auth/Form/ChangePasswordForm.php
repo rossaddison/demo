@@ -19,7 +19,6 @@ final class ChangePasswordForm extends FormModel implements RulesProviderInterfa
 {
     private string $login = '';
     private string $password = '';
-    private string $passwordVerify = '';
     private string $newPassword = '';
     private string $newPasswordVerify = '';
     
@@ -56,7 +55,6 @@ final class ChangePasswordForm extends FormModel implements RulesProviderInterfa
         return [
             'login' => $this->translator->translate('layout.login'),
             'password' => $this->translator->translate('layout.password'),
-            'passwordVerify' => $this->translator->translate('layout.password-verify'),
             'newPassword' => $this->translator->translate('layout.password.new'),
             'newPasswordVerify' => $this->translator->translate('layout.password-verify.new'),
         ];
@@ -81,12 +79,7 @@ final class ChangePasswordForm extends FormModel implements RulesProviderInterfa
     {
         return $this->password;
     }
-    
-    public function getPasswordVerify(): string
-    {  
-        return $this->passwordVerify;
-    }
-    
+        
     public function getNewPassword(): string
     {  
         return $this->newPassword;
@@ -112,7 +105,6 @@ final class ChangePasswordForm extends FormModel implements RulesProviderInterfa
                 },
             ],
             'password' => $this->PasswordRules(),
-            'passwordVerify' => $this->PasswordVerifyRules(),
             'newPassword' => [
                 new Required(),
                 new Length(min: 8),
@@ -139,23 +131,6 @@ final class ChangePasswordForm extends FormModel implements RulesProviderInterfa
         ];
     }
         
-    private function passwordVerifyRules(): array
-    {
-        return [
-            new Required(),
-            new Callback(
-                callback: function (): Result {
-                    $result = new Result();
-                    if (!($this->password === $this->passwordVerify)) {
-                        $result->addError($this->translator->translate('validator.password.not.match'));
-                    }
-                    return $result;
-                },
-                skipOnEmpty: true,
-            ),
-        ];
-    }
-    
     private function newPasswordVerifyRules(): array
     {
         return [

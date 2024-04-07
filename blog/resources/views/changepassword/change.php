@@ -37,7 +37,6 @@ $this->setTitle($translator->translate('layout.change-password'));
 
                     <?= Field::text($formModel, 'login')->addInputAttributes(['value'=> $login ?? '', 'readonly'=>'readonly']) ?>
                     <?= Field::password($formModel, 'password') ?>
-                    <?= Field::password($formModel, 'passwordVerify') ?>
                     <?= Field::password($formModel, 'newPassword') ?>
                     <?= Field::password($formModel, 'newPasswordVerify') ?>
                     <?= Field::submitButton()

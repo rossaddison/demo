@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Auth\Controller;
@@ -13,14 +12,12 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Yiisoft\FormModel\FormHydrator;
 use Yiisoft\Http\Method;
-use Yiisoft\Translator\TranslatorInterface as Translator;
 use Yiisoft\User\CurrentUser;
 use Yiisoft\Yii\View\ViewRenderer;
 
 final class ChangePasswordController
 {
     public function __construct(
-      private Translator $translator,
       private CurrentUser $currentUser,
       private WebControllerService $webService,
       private ViewRenderer $viewRenderer,
