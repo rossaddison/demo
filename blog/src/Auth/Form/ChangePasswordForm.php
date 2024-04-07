@@ -48,7 +48,7 @@ final class ChangePasswordForm extends FormModel implements RulesProviderInterfa
     /**
      * @return string[]
      *
-     * @psalm-return array{login: string, password: string, passwordVerify: string, newPassword: string, newPasswordVerify: string}
+     * @psalm-return array{login: string, password: string, newPassword: string, newPasswordVerify: string}
      */
     public function getAttributeLabels(): array
     {
