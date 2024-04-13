@@ -184,6 +184,6 @@ return [
             Route::get('/openapi.json')
                 ->middleware(FormatDataResponseAsJson::class)
                 ->middleware(CorsAllowAll::class)
-                ->action([SwaggerJson::class, 'handle']),
+                ->action([SwaggerJson::class, 'process']),
         ),
 ];
