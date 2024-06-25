@@ -59,7 +59,6 @@ jobs:
           php-version: ${{ matrix.php }}
           tools: composer:v2, cs2pr
           coverage: none
-          working-directory: ${{ env.working_directory }}
 
       - name: Determine composer cache directory
         run: echo "COMPOSER_CACHE_DIR=$(composer config cache-dir)" >> $GITHUB_ENV
@@ -72,16 +71,12 @@ jobs:
           key: php${{ matrix.php }}-composer-${{ hashFiles('**/composer.json') }}
           restore-keys: |
             php${{ matrix.php }}-composer-
-          working-directory: ${{ env.working_directory }}
 
       - name: Update composer
         run: composer self-update
-        working-directory: ${{ env.working_directory }}
 
       - name: Install maglnet/composer-require-checker
         run: composer require maglnet/composer-require-checker:^4.0
-        working-directory: ${{ env.working_directory }}
 
       - name: Check dependency
         run: vendor/bin/composer-require-checker
-        working-directory: ${{ env.working_directory }}
