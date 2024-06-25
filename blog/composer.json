@@ -91,8 +91,8 @@
         "yiisoft/yii-runner-console": "^2.0",
         "yiisoft/yii-runner-http": "^2.0",
         "yiisoft/yii-sentry": "dev-master",
-        "yiisoft/yii-swagger": "^2.0",
-        "yiisoft/yii-view": "^6.0"
+        "rossaddison/yii-swagger": "dev-master",               
+        "rossaddison/yii-view": "*"
     },
     "require-dev": {
         "codeception/c3": "^2.6",
