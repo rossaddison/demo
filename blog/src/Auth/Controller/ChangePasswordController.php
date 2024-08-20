@@ -64,7 +64,7 @@ final class ChangePasswordController
             // PASSWORD CHANGE and other scenarios, that require forceful access revocation for old sessions.
             // The authService logout function will regenerate the auth key here => overwriting any auth key
             $authService->logout();
-            $this->flash_message('success', $this->translator->translate('validator.password.change'));
+            $this->flashMessage('success', $this->translator->translate('validator.password.change'));
             return $this->redirectToMain();
           }
           return $this->viewRenderer->render('change', 
