@@ -48,7 +48,7 @@ final class ChangePasswordController
           return $this->redirectToMain();
       }
      
-      $identity_id = $this->currentUser->getIdentity()->getId();
+      $identityId = $this->currentUser->getIdentity()->getId();
       if (null!==$identity_id) {
         $identity = $identityRepository->findIdentity($identity_id);
         if (null!==$identity) {
