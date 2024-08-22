@@ -49,8 +49,8 @@ final class ChangePasswordController
       }
      
       $identityId = $this->currentUser->getIdentity()->getId();
-      if (null!==$identity_id) {
-        $identity = $identityRepository->findIdentity($identity_id);
+      if (null!==$identityId) {
+        $identity = $identityRepository->findIdentity($identityId);
         if (null!==$identity) {
           // Identity and User are in a HasOne relationship so no null value
           $login = $identity->getUser()?->getLogin();
@@ -82,7 +82,7 @@ final class ChangePasswordController
      * @param string $message
      * @return Flash
      */
-    private function flash_message(string $level, string $message): Flash {
+    private function flashMessage(string $level, string $message): Flash {
       $this->flash->add($level, $message, true);
       return $this->flash;
     }
