@@ -75,7 +75,7 @@ final class ChangePasswordController
                * @see resources\rbac\items.php
                * @see https://github.com/yiisoft/demo/pull/602
                */
-              'changePasswordForAnyUser' => $this->currentUser->can('changePasswordForAnyUser') 
+              'canChangePasswordForAnyUser' => $this->currentUser->can('changePasswordForAnyUser') 
           ]);
         } // identity
       } // identity_id 

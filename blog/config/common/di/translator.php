@@ -7,11 +7,8 @@ use Yiisoft\Translator\CategorySource;
 use Yiisoft\Translator\IntlMessageFormatter;
 use Yiisoft\Translator\Message\Php\MessageSource;
 
-/**
- * @var array $params
- * @var array $params['yiisoft/translator']
- * @var string $params['yiisoft/translator']['defaultCategory']
- */
+/** @var array $params */
+
 return [
     // Configure application CategorySource
     'translation.app' => [
@@ -23,5 +20,5 @@ return [
             );
         },
         'tags' => ['translation.categorySource'],
-    ], 
+    ],
 ];
