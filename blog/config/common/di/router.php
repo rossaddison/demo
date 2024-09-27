@@ -32,7 +32,7 @@ return [
     ],
     
     RouteCollectionInterface::class => static function (RouteCollectorInterface $collector) use ($config) {
-        $routes = $config->get('routes');
+        $routes = $config->get('app-routes');
         $collector
             ->middleware(CsrfMiddleware::class)
             ->middleware(FormatDataResponse::class)

@@ -32,7 +32,7 @@ $this->setTitle($translator->translate('layout.change-password'));
                         // note: the change function actually appears in the ChangeController
                         ->post($urlGenerator->generate('auth/change'))
                         ->csrf($csrf)
-                        ->id('changeForm')
+                        ->id('changePasswordForm')
                         ->open() ?>
 
                     <?= $canChangePasswordForAnyUser ? Field::text($formModel, 'login')->addInputAttributes(['value'=> $login ?? '']) 

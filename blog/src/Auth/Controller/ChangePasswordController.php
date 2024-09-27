@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Auth\Controller;
@@ -16,17 +17,17 @@ use Yiisoft\Session\SessionInterface as Session;
 use Yiisoft\Session\Flash\Flash;
 use Yiisoft\Translator\TranslatorInterface as Translator;
 use Yiisoft\User\CurrentUser;
-use Yiisoft\Yii\View\ViewRenderer;
+use Yiisoft\Yii\View\Renderer\ViewRenderer;
 
 final class ChangePasswordController
 {
     public function __construct(
+      private CurrentUser $currentUser,      
       private Session $session,
       private Flash $flash,
       private Translator $translator,
-      private CurrentUser $currentUser,
-      private WebControllerService $webService, 
       private ViewRenderer $viewRenderer,
+      private WebControllerService $webService      
     )
     {
       $this->currentUser = $currentUser;
@@ -47,7 +48,7 @@ final class ChangePasswordController
       if ($authService->isGuest()) {
           return $this->redirectToMain();
       }
-     
+      
       $identityId = $this->currentUser->getIdentity()->getId();
       if (null!==$identityId) {
         $identity = $identityRepository->findIdentity($identityId);
@@ -67,24 +68,34 @@ final class ChangePasswordController
             $this->flashMessage('success', $this->translator->translate('validator.password.change'));
             return $this->redirectToMain();
           }
-          return $this->viewRenderer->render('change', 
-                  [
-                      'formModel' => $changePasswordForm, 
-                      'login' => $login,
-                      'canChangePasswordForAnyUser' => $this->currentUser->can('changePasswordForAnyUser')    
-                  ]);
+          return $this->viewRenderer->render('change', [
+              'formModel' => $changePasswordForm, 
+              'login' => $login,
+              /**
+               * @see resources\rbac\items.php
+               * @see https://github.com/yiisoft/demo/pull/602
+               */
+              'changePasswordForAnyUser' => $this->currentUser->can('changePasswordForAnyUser') 
+          ]);
         } // identity
       } // identity_id 
+      return $this->redirectToMain();
     } // reset
     
-    /**
+     /**
      * @param string $level
      * @param string $message
-     * @return Flash
+     * @return Flash|null
      */
-    private function flashMessage(string $level, string $message): Flash {
-      $this->flash->add($level, $message, true);
-      return $this->flash;
+    private function flashMessage(string $level, string $message): Flash|null {
+        /**
+         * @see Prevent empty messages from being added to the queue
+         */
+        if (strlen($message) > 0) {
+            $this->flash->add($level, $message, true);
+            return $this->flash;
+        }
+        return null;
     }
     
     private function redirectToMain(): ResponseInterface

@@ -35,11 +35,11 @@ final class ChangePasswordForm extends FormModel implements RulesProviderInterfa
         if ($this->validator->validate($this)->isValid()) {
             $user = $this->userRepository->findByLogin($this->getLogin());
             if (null!==$user) {
-              $user->setPassword($this->getNewPassword());
-              // The cookie identity auth_key is regenerated on logout
-              // Refer to ResetController reset function
-              $this->userRepository->save($user);
-              return true;
+                $user->setPassword($this->getNewPassword());
+                // The cookie identity auth_key is regenerated on logout
+                // Refer to ChangeController change function
+                $this->userRepository->save($user);
+                return true;
             }
         }
         return false;
@@ -63,7 +63,7 @@ final class ChangePasswordForm extends FormModel implements RulesProviderInterfa
     /**
      * @return string
      *
-     * @psalm-return 'Change'
+     * @psalm-return 'ChangePassword'
      */
     public function getFormName(): string
     {
@@ -93,21 +93,31 @@ final class ChangePasswordForm extends FormModel implements RulesProviderInterfa
     public function getRules(): array
     {
         return [
-            'login' => [
-                new Required(),
-                new Length(min: 1, max: 48, skipOnError: true),
-                function (mixed $value): Result {
-                    $result = new Result();
-                    if ($this->userRepository->findByLogin((string)$value) == null) {
-                        $result->addError($this->translator->translate('validator.user.exist.not'));
-                    }
-                    return $result;
-                },
-            ],
-            'password' => $this->PasswordRules(),
+            /**
+             * @see ChangePasswordController function change  $login = $identity->getUser()?->getLogin();
+             * @see resources\views\changepassword\change.php  
+             * The login field will include the current login username or email address {$login} in a READONLY field 
+             * for all users besides the administrator i.e.
+             * $changePasswordForAnyUser  
+                            ?   Field::text($formModel, 'login')
+                                ->label($translator->translate('layout.login'))
+                                ->addInputAttributes([
+                                    'value' => $login ?? ''
+                                ]) 
+                            :   Field::text($formModel, 'login')
+                                ->label($translator->translate('layout.login'))
+                                ->addInputAttributes([
+                                    'value' => $login ?? '', 
+                                    'readonly' => 'readonly'
+                                ]); 
+             */
+            'login' => [new Required()],
+            'password' => $this->passwordRules(),
             'newPassword' => [
                 new Required(),
-                new Length(min: 8),
+                /**
+                 * @see https://github.com/yiisoft/demo/pull/602  Password length should not be limited
+                 */
             ], 
             'newPasswordVerify' => $this->NewPasswordVerifyRules()
         ];
@@ -122,15 +132,14 @@ final class ChangePasswordForm extends FormModel implements RulesProviderInterfa
                     $result = new Result();
                     if (!$this->authService->login($this->login, $this->password)) {
                       $result->addError($this->translator->translate('validator.invalid.login.password'));
-                    }
-                    
+                    }                    
                     return $result;
                 },
                 skipOnEmpty: true,
             ),
         ];
     }
-        
+           
     private function newPasswordVerifyRules(): array
     {
         return [
