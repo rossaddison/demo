@@ -17,22 +17,31 @@ $this->setTitle('Home');
 echo Carousel::widget()
     ->captionTagName('h2')
     ->items(
-        new CarouselItem(
-            Div::tag()->addAttributes(['style' => 'height: 200px'])->addClass('d-block w-100 bg-info'),
-            $translator->translate('home.caption.slide1'),
-            $translator->translate('home.caption.placeholder1'),
+        CarouselItem::to(
+            content:'<div class="d-block w-100 bg-info" style="height: 200 px; text-align: center"><br>'.
+                            $translator->translate('home.caption.placeholder1').
+                     '</div>',
+            active: true,
+            caption: $translator->translate('home.caption.slide1'),
+            encodeCaption: false,
             captionAttributes: ['class' => ['d-none', 'd-md-block']],
         ),
-        new CarouselItem(
-            Div::tag()->addAttributes(['style' => 'height: 200px'])->addClass('d-block w-100 bg-secondary'),
-            $translator->translate('home.caption.slide2'),
-            $translator->translate('home.caption.placeholder2'),
+        CarouselItem::to(
+            content:'<div class="d-block w-100 bg-info" style="height: 200 px; text-align: center"><br>'.
+                            $translator->translate('home.caption.placeholder2').
+                     '</div>',
+            active: false,
+            caption: $translator->translate('home.caption.slide2'),
+            encodeCaption: false,
             captionAttributes: ['class' => ['d-none', 'd-md-block']],
         ),
-        new CarouselItem(
-            Div::tag()->addAttributes(['style' => 'height: 200px'])->addClass('d-block w-100 bg-dark'),
-            $translator->translate('home.caption.slide3'),
-            $translator->translate('home.caption.placeholder3'),
+        CarouselItem::to(
+            content:'<div class="d-block w-100 bg-info" style="height: 200 px; text-align: center"><br>'.
+                            $translator->translate('home.caption.placeholder3').
+                     '</div>',
+            active: false,
+            caption: $translator->translate('home.caption.slide3'),
+            encodeCaption: false,
             captionAttributes: ['class' => ['d-none', 'd-md-block']],
         ),
     )

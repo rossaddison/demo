@@ -13,6 +13,11 @@ final class UserLoggedInMessage implements MessageInterface
     public function __construct(private string $userId, private int $time)
     {
     }
+    
+    public static function fromData(string $handlerName, mixed $data, array $metadata = []): MessageInterface
+    {
+       return static::fromData($handlerName, $data, $metadata); 
+    }    
 
     public function setId(?string $id): void
     {

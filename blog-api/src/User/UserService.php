@@ -11,14 +11,14 @@ use Yiisoft\Auth\IdentityInterface;
 use Yiisoft\Auth\IdentityRepositoryInterface;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\User\CurrentUser;
-use Yiisoft\Queue\QueueFactoryInterface;
+use Yiisoft\Queue\QueueInterface;
 
 final class UserService
 {
     public function __construct(
         private CurrentUser $currentUser,
         private IdentityRepositoryInterface $identityRepository,
-        private QueueFactoryInterface $queueFactory,
+        private QueueInterface $queue,
     ) {
     }
 
@@ -52,7 +52,7 @@ final class UserService
         $this->identityRepository->save($identity);
 
         $queueMessage = new UserLoggedInMessage($identity->getId(), time());
-        $this->queueFactory->get(LoggingAuthorizationHandler::CHANNEL)->push($queueMessage);
+        $this->queue->get(LoggingAuthorizationHandler::CHANNEL)->push($queueMessage);
 
         return $identity;
     }

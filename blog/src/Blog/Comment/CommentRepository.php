@@ -10,6 +10,10 @@ use Yiisoft\Data\Reader\DataReaderInterface;
 use Yiisoft\Data\Reader\Sort;
 use Yiisoft\Data\Cycle\Reader\EntityReader;
 
+/**
+ * @template TEntity of Comment
+ * @extends Select\Repository<TEntity>
+ */
 final class CommentRepository extends Select\Repository
 {
     public function __construct(Select $select)

@@ -30,5 +30,6 @@ return [
                 ]),
             ],
         ],
+        '->translate' // optional, default value for Translation call to look for.                        
     ],
 ];

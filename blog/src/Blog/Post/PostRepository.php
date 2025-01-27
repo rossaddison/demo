@@ -14,6 +14,10 @@ use Yiisoft\Data\Cycle\Writer\EntityWriter;
 use Yiisoft\Data\Reader\DataReaderInterface;
 use Yiisoft\Data\Reader\Sort;
 
+/**
+ * @template TEntity of Post
+ * @extends Select\Repository<TEntity>
+ */
 final class PostRepository extends Select\Repository
 {
     public function __construct(private EntityWriter $entityWriter, Select $select)

@@ -15,6 +15,10 @@ use Yiisoft\Data\Cycle\Reader\EntityReader;
 use Yiisoft\Data\Reader\DataReaderInterface;
 use Yiisoft\Data\Reader\Sort;
 
+/**
+ * @template TEntity of Tag
+ * @extends Select\Repository<TEntity>
+ */
 final class TagRepository extends Repository
 {
     public function __construct(private ORMInterface $orm, Select $select)

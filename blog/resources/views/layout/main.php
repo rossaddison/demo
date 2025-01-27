@@ -9,13 +9,21 @@ use Yiisoft\Assets\AssetManager;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\Button;
 use Yiisoft\Html\Tag\Form;
+use Yiisoft\Html\Tag\Label;
 use Yiisoft\Router\CurrentRoute;
 use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\Strings\StringHelper;
 use Yiisoft\Translator\TranslatorInterface;
 use Yiisoft\View\WebView;
+use Yiisoft\Yii\Bootstrap5\Dropdown;
+use Yiisoft\Yii\Bootstrap5\DropdownItem;
+use Yiisoft\Yii\Bootstrap5\DropdownToggleVariant;
 use Yiisoft\Yii\Bootstrap5\Nav;
 use Yiisoft\Yii\Bootstrap5\NavBar;
+use Yiisoft\Yii\Bootstrap5\NavBarExpand;
+use Yiisoft\Yii\Bootstrap5\NavBarPlacement;
+use Yiisoft\Yii\Bootstrap5\NavLink;
+use Yiisoft\Yii\Bootstrap5\NavStyle;
 
 /**
  * @var UrlGeneratorInterface $urlGenerator
@@ -58,109 +66,132 @@ $this->beginPage();
         <?php $this->beginBody() ?>
 
         <?= NavBar::widget()
+            ->addAttributes([])    
+            ->addClass('navbar navbar-light bg-light navbar-expand-sm text-white')     
             ->brandText($brandLabel)
             ->brandUrl($urlGenerator->generate('site/index'))
-            ->options(['class' => 'navbar navbar-light bg-light navbar-expand-sm text-white'])
-            ->begin() ?>
+            ->class()
+            ->container(false) 
+            ->containerAttributes([])      
+            ->expand(NavBarExpand::LG)
+            ->id('navbar')      
+            //->innerContainerAttributes(['class' => 'container-md'])      
+            ->placement(NavBarPlacement::STICKY_TOP)     
+            ->begin(); ?>
 
         <?= Nav::widget()
             ->currentPath($currentRoute
                 ->getUri()
                 ->getPath())
-            ->options(['class' => 'navbar-nav mx-auto'])
+            ->addClass('navbar-nav mx-auto')
             ->items(
-                [
-                    [
-                        'label' => $translator->translate('menu.blog'),
-                        'url' => $urlGenerator->generate('blog/index'),
-                        'active' => StringHelper::startsWith(
+                 NavLink::to(
+                    Label::tag()
+                    ->attributes(['class' => 'bi bi-door-open-fill text-success'])
+                    ->content($translator->translate('menu.blog')),    
+                    $urlGenerator->generate('blog/index'), 
+                    StringHelper::startsWith(
                             $currentRouteName,
                             'blog/'
-                        ) && $currentRouteName !== 'blog/comment/index',
-                    ],
-                    [
-                        'label' => $translator->translate('menu.comments-feed'),
-                        'url' => $urlGenerator->generate('blog/comment/index'),
-                    ],
-                    [
-                        'label' => $translator->translate('menu.users'),
-                        'url' => $urlGenerator->generate('user/index'),
-                        'active' => StringHelper::startsWith($currentRouteName, 'user/'),
-                    ],
-                    [
-                        'label' => $translator->translate('menu.contact'),
-                        'url' => $urlGenerator->generate('site/contact'),
-                    ],
-                    [
-                        'label' => $translator->translate('menu.swagger'),
-                        'url' => $urlGenerator->generate('swagger/index'),
-                    ],
-                ]
+                        ) && $currentRouteName !== 'blog/comment/index', 
+                    !StringHelper::startsWith(
+                            $currentRouteName,
+                            'blog/'
+                        ) && $currentRouteName == 'blog/comment/index',                        
+                    false
+                ),
+                NavLink::to(
+                    Label::tag()
+                    ->content($translator->translate('menu.comments-feed')),    
+                    $urlGenerator->generate('blog/comment/index'), 
+                    StringHelper::startsWith($currentRouteName, 'user/'), 
+                    false,                        
+                    false
+                ),    
+                NavLink::to(
+                    Label::tag()
+                    ->content($translator->translate('menu.contact')),    
+                    $urlGenerator->generate('site/contact'), 
+                    false, 
+                    false,                        
+                    false
+                ),    
+                NavLink::to(
+                    Label::tag()
+                    ->content($translator->translate('menu.swagger')),    
+                    $urlGenerator->generate('swagger/index'), 
+                    false, 
+                    false,                        
+                    false
+                )
             ) ?>
 
         <?= Nav::widget()
             ->currentPath($currentRoute
                 ->getUri()
                 ->getPath())
-            ->options(['class' => 'navbar-nav'])
+            ->class('navbar-nav')
             ->items(
-                [
-                    [
-                        'label' => $translator->translate('menu.language'),
-                        'url' => '#',
-                        'items' => [
-                            [
-                                'label' => 'English',
-                                'url' => $urlGenerator->generateFromCurrent(['_language' => 'en'], fallbackRouteName: 'site/index'),
-                            ],
-                            [
-                                'label' => 'Русский',
-                                'url' => $urlGenerator->generateFromCurrent(['_language' => 'ru'], fallbackRouteName: 'site/index'),
-                            ],
-                            [
-                                'label' => 'Slovenský',
-                                'url' => $urlGenerator->generateFromCurrent(['_language' => 'sk'], fallbackRouteName: 'site/index'),
-                            ],
-                            [
-                                'label' => 'Indonesia',
-                                'url' => $urlGenerator->generateFromCurrent(['_language' => 'id'], fallbackRouteName: 'site/index'),
-                            ],
-                            [
-                                'label' => 'German',
-                                'url' => $urlGenerator->generateFromCurrent(['_language' => 'de'], fallbackRouteName: 'site/index'),
-                            ],
-                        ],
-                    ],
-                    [
-                        'label' => $translator->translate('menu.login'),
-                        'url' => $urlGenerator->generate('auth/login'),
-                        'visible' => $isGuest,
-                    ],
-                    [
-                        'label' => $translator->translate('menu.signup'),
-                        'url' => $urlGenerator->generate('auth/signup'),
-                        'visible' => $isGuest,
-                    ],
-                    [
-                        'label' => $translator->translate('layout.change-password'),
-                        'url' => $urlGenerator->generate('auth/change'),
-                        // Only make visible if NOT a guest i.e. authenticated and/or authorized
-                        'visible' => !$isGuest,
-                    ],
-                    $isGuest ? '' : Form::tag()
-                            ->post($urlGenerator->generate('auth/logout'))
-                            ->csrf($csrf)
-                            ->open()
-                        . '<div class="mb-1">'
-                        . Button::submit(
-                            $translator->translate('menu.logout', ['login' => Html::encode($user->getLogin())])
-                        )
-                            ->class('btn btn-primary')
-                        . '</div>'
-                        . Form::tag()->close(),
-                ],
-            ) ?>
-        <?= NavBar::end() ?>
+                Dropdown::widget()
+                ->addClass('bi bi-translate')  
+                ->addAttributes([
+                    'style' => 'font-size: 1rem; color: cornflowerblue;',
+                    'title' => $translator->translate('menu.language'),
+                    'url' => '#'
+                ])
+                ->toggleVariant(DropdownToggleVariant::INFO)
+                ->toggleContent('')        
+                ->toggleSizeSmall(true)        
+                ->items(
+                    DropdownItem::link('English', $urlGenerator->generateFromCurrent(['_language' => 'en'], fallbackRouteName: 'site/index')),
+                    DropdownItem::link('German / Deutsch', $urlGenerator->generateFromCurrent(['_language' => 'de'], fallbackRouteName: 'site/index')),
+                    DropdownItem::link('Indonesian / bahasa Indonesia', $urlGenerator->generateFromCurrent(['_language' => 'id'], fallbackRouteName: 'site/index')),
+                    DropdownItem::link('Russian / Русский', $urlGenerator->generateFromCurrent(['_language' => 'ru'], fallbackRouteName: 'site/index')),
+                    DropdownItem::link('Slovakian / Slovenský', $urlGenerator->generateFromCurrent(['_language' => 'sk'], fallbackRouteName: 'site/index')),
+                ),
+                NavLink::to(
+                    Label::tag()
+                    ->content($isGuest ? $translator->translate('menu.login') : ''),    
+                    $urlGenerator->generate('auth/login'), 
+                    false, 
+                    !$isGuest,                        
+                    false
+                ),
+                NavLink::to(
+                    Label::tag()
+                    ->content($isGuest ? $translator->translate('menu.signup') : ''),    
+                    $urlGenerator->generate('auth/signup'), 
+                    false, 
+                    !$isGuest,                        
+                    false
+                ),
+                NavLink::to(
+                    Label::tag()
+                    ->content(!$isGuest ? $translator->translate('layout.change-password') : ''),    
+                    $urlGenerator->generate('auth/change'), 
+                    false, 
+                    // Only make visible i.e not disabled if NOT a guest i.e. authenticated and/or authorized
+                    // disabled => is a Guest    
+                    $isGuest,                        
+                    false
+                )
+            )
+            ->styles(NavStyle::NAVBAR); ?>
+        
+        <?= 
+            $isGuest ? '' : Form::tag()
+                    ->post($urlGenerator->generate('auth/logout'))
+                    ->csrf($csrf)
+                    ->open()
+                . '<div class="mb-1">'
+                . Button::submit(
+                    $translator->translate('menu.logout', ['login' => Html::encode($user->getLogin())])
+                )
+                    ->class('btn btn-primary')
+                . '</div>'
+                . Form::tag()->close()          
+        ?>
+        <?= NavBar::end(); ?>
     </header>
 
     <main class="container py-3">
