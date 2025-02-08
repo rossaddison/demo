@@ -1,0 +1,1 @@
+{"version":1,"defects":[],"times":{"App\\Tests\\Functional\\EventListenerConfigurationTest::testConsoleListenerConfiguration":0.244,"App\\Tests\\Functional\\IndexControllerTest::testGetIndex":2.35}}
