@@ -10,8 +10,8 @@
 
 It's intended to show and test all Yii features.
 
-[![Latest Stable Version](https://poser.pugx.org/yiisoft/demo/v/stable.png)](https://packagist.org/packages/yiisoft/demo)
-[![Total Downloads](https://poser.pugx.org/yiisoft/demo/downloads.png)](https://packagist.org/packages/yiisoft/demo)
+[![Latest Stable Version](https://poser.pugx.org/yiisoft/demo/v)](https://packagist.org/packages/yiisoft/demo)
+[![Total Downloads](https://poser.pugx.org/yiisoft/demo/downloads)](https://packagist.org/packages/yiisoft/demo)
 [![build](https://github.com/yiisoft/demo/workflows/build/badge.svg)](https://github.com/yiisoft/demo/actions)
 [![Code Coverage](https://codecov.io/gh/yiisoft/demo/branch/master/graph/badge.svg?token=dWuz2uAVU2)](https://codecov.io/gh/yiisoft/demo)
 [![static analysis](https://github.com/yiisoft/demo/workflows/static%20analysis/badge.svg)](https://github.com/yiisoft/demo/actions?query=workflow%3A%22static+analysis%22)
