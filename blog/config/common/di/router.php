@@ -21,10 +21,7 @@ return [
     UrlGeneratorInterface::class => [
         'class' => UrlGenerator::class,
         'setEncodeRaw()' => [$params['yiisoft/router-fastroute']['encodeRaw']],
-        'setDefaultArgument()' => ['_language', 'en'],
-        'reset' => function () {
-            $this->defaultArguments = ['_language', 'en'];
-        },
+        'setDefaultArgument()' => ['_language', 'en'],        
     ],
 
     RouteCollectionInterface::class => static function (RouteCollectorInterface $collector) use ($config) {
