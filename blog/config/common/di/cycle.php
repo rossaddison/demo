@@ -11,7 +11,6 @@ use Cycle\ORM\FactoryInterface;
 
 return [
     // Replace Factory definition to redefine default collection type
-    // Todo: remove with https://github.com/yiisoft/yii-cycle/issues/111
     FactoryInterface::class => static function (DatabaseManager $dbManager, Spiral\Core\FactoryInterface $factory) {
         return new Factory(
             $dbManager,
